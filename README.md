@@ -1,54 +1,102 @@
-# React + TypeScript + Vite
+# Rick and Morty Episodes App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web feita com React + TypeScript consumindo a API GraphQL de Rick and Morty. A proposta é permitir que usuários explorem episódios da série com recursos como favoritar, marcar como visto, aplicar filtros e ver detalhes dos personagens.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✅ Funcionalidades implementadas
 
-## Expanding the ESLint configuration
+### 🔍 Episódios
+- Listagem de episódios com animação usando Framer Motion
+- Paginação automática com `fetchMore` até o fim dos dados
+- Filtro por nome do episódio (busca em tempo real)
+- Exibição com layout responsivo em grid
+- Imagem representando um dos personagens do episódio
+- Título limitado a 2 linhas (`line-clamp-2`)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### ❤️ Favoritos
+- Botão para favoritar e desfavoritar episódios
+- Página com lista de episódios favoritados
+- Contador de favoritos na navbar
+- Animações nos cards dos favoritos
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### 👁️ Vistos
+- Botão para marcar/desmarcar como "Visto"
+- Página dedicada com episódios vistos
+- Contador de vistos na navbar
+
+### 📺 Detalhes do Episódio
+- Página individual com informações do episódio
+- Lista de personagens participantes com imagem e nome
+- Status do personagem com bolinha colorida:
+  - 🟢 Alive
+  - 🔴 Dead
+  - ⚪ Unknown
+
+### 💄 Interface & Estilo
+- Tailwind CSS para estilização
+- Navbar com efeito *glassmorphism* (`backdrop-blur`, `bg-white/30`)
+- Paleta de cores suave (tons claros, bordas suaves)
+- Ícones com `react-icons`
+- Cursor pointer nos botões de ação
+- Mobile responsivo com ocultação do texto da logo em telas pequenas
+
+---
+
+## 📦 Tecnologias utilizadas
+
+- React + TypeScript
+- Vite
+- Apollo Client (GraphQL)
+- Tailwind CSS
+- Framer Motion
+- React Router DOM
+- React Icons
+
+---
+
+## 📁 Organização do projeto
+
+```bash
+src/
+├── components/ # Componentes reutilizáveis
+├── context/ # Estado global (favoritos e vistos)
+├── graphql/ # Queries GraphQL
+├── pages/ # Páginas principais (home, favorites, seen, detail)
+├── types/ # Tipagens TypeScript
+├── App.tsx # Rotas principais
+└── main.tsx # Setup principal do app
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ⚙️ Instalação
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 1. Clone o repositório
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+git clone https://github.com/RobsonMT/azs-web-rickandmorty.git
+cd azs-web-rickandmorty
 ```
+
+### 2. Instale as dependências
+```bash 
+npm install
+# ou
+yarn install
+```
+
+### 3. Inicie o servidor de desenvolvimento
+```bash 
+npm run dev
+# ou
+yarn dev
+
+```
+
+---
+
+## 👨‍💻 Autor
+
+Desenvolvido por [Robson F. Martins](https://github.com/RobsonMT)
+
+---
+
