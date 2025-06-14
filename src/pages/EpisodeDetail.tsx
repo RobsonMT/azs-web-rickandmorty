@@ -62,7 +62,7 @@ export default function EpisodeDetail() {
             variants={cardVariants}
             whileHover={{ scale: 1.03 }}
             transition={{ duration: 0.3 }}
-            className="border-b-gray-600 rounded-lg p-4 shadow-md"
+            className="border-b-gray-500 rounded-lg p-4 shadow-md"
           >
             <img
               src={char.image}
@@ -70,6 +70,7 @@ export default function EpisodeDetail() {
               className="w-full h-40 object-cover rounded mb-2"
             />
             <h3 className="font-bold text-lg">{char.name}</h3>
+            <p className="text-sm text-gray-600">{char.species}</p>
             <div className="flex items-center gap-2">
               <span
                 className={`h-3 w-3 rounded-full ${
@@ -82,7 +83,6 @@ export default function EpisodeDetail() {
               ></span>
               <span className="text-sm text-gray-700">{char.status}</span>
             </div>
-            <p className="text-sm text-gray-600">{char.species}</p>
           </motion.div>
         ))}
       </motion.div>

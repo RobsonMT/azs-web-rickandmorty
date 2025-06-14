@@ -1,62 +1,102 @@
 import { Link } from "react-router-dom";
 import { useEpisodes } from "../context/EpisodesContext";
+import { motion } from "framer-motion";
+import { BsCalendarEvent } from "react-icons/bs";
+import { RiGroupLine } from "react-icons/ri";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+import type { Episode } from "../types/episode";
 
-interface Props {
-  id: string;
-  episode: string;
-  name: string;
-  air_date: string;
-  charactersCount: number;
-}
+const containerVariants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
 
-export default function EpisodeCard({
-  id,
-  episode,
-  name,
-  air_date,
-  charactersCount,
-}: Props) {
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
+};
+
+type Props = {
+  episodes: Episode[];
+};
+
+export default function EpisodeCard({ episodes }: Props) {
   const { favorites, seen, toggleFavorite, toggleSeen } = useEpisodes();
 
-  const isFav = favorites.includes(id);
-  const isSeen = seen.includes(id);
-
   return (
-    <div className="border rounded-md p-4 shadow hover:shadow-md transition relative bg-white">
-      <Link to={`/episode/${id}`}>
-        <h2 className="font-semibold text-lg">
-          {episode} - {name}
-        </h2>
-      </Link>
-      <p>
-        <strong>Data de exibição:</strong> {air_date}
-      </p>
-      <p>
-        <strong>Personagens:</strong> {charactersCount}
-      </p>
+    <motion.div
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
+    >
+      {episodes.map((ep) => (
+        <motion.div
+          key={ep.id}
+          variants={cardVariants}
+          whileHover={{ scale: 1.03 }}
+          transition={{ duration: 0.3 }}
+          className="border-b-gray-500 rounded-lg p-4 shadow-md flex flex-col justify-between bg-white"
+        >
+          <div className="flex items-center gap-4 mb-4">
+            {ep.characters.length > 0 && ep.characters[0].image ? (
+              <img
+                src={ep.characters[0].image}
+                alt={ep.characters[0].name}
+                className="w-16 h-16 rounded-full object-cover"
+              />
+            ) : (
+              <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center text-gray-500 text-sm">
+                Sem imagem
+              </div>
+            )}
+            <div>
+              <Link
+                to={`/episode/${ep.id}`}
+                className="text-xl font-bold text-black hover:underline hover:text-blue-700 line-clamp-2"
+              >
+                {ep.name}
+              </Link>
+              <p className="bg-blue-50 rounded-3xl flex justify-center max-w-[80px]">
+                {ep.episode}
+              </p>
+              <p className="text-sm flex items-center gap-1 text-gray-700 mt-1">
+                <BsCalendarEvent className="mr-1" /> {ep.air_date}
+              </p>
+              <p className="text-sm text-gray-600 flex items-center gap-1">
+                <RiGroupLine className="mr-1" /> {ep.characters.length}{" "}
+                personagens
+              </p>
+            </div>
+          </div>
 
-      <div className="absolute top-2 right-2 flex space-x-2">
-        <button
-          aria-label={isFav ? "Desfavoritar" : "Favoritar"}
-          onClick={() => toggleFavorite(id)}
-          className={`text-xl ${
-            isFav ? "text-yellow-400" : "text-gray-300 hover:text-yellow-400"
-          }`}
-          type="button"
-        >
-          ★
-        </button>
-        <button
-          aria-label={isSeen ? "Marcar como não visto" : "Marcar como visto"}
-          onClick={() => toggleSeen(id)}
-          className={`text-xl ${
-            isSeen ? "text-green-500" : "text-gray-300 hover:text-green-500"
-          }`}
-          type="button"
-        >
-          👁
-        </button>
-      </div>
-    </div>
+          <div className="space-x-2 flex justify-end">
+            <button
+              onClick={() => toggleFavorite(ep.id)}
+              className={`px-3 py-1 rounded-2xl text-white flex items-center gap-2 cursor-pointer hover:brightness-110 transition ${
+                favorites.includes(ep.id) ? "bg-red-400" : "bg-gray-400"
+              }`}
+            >
+              {favorites.includes(ep.id) ? <FaHeart /> : <FaRegHeart />}
+              {favorites.includes(ep.id) ? "Desfavoritar" : "Favoritar"}
+            </button>
+            <button
+              onClick={() => toggleSeen(ep.id)}
+              className={`px-3 py-1 rounded-2xl text-white flex items-center gap-2 cursor-pointer hover:brightness-110 transition ${
+                seen.includes(ep.id) ? "bg-green-400" : "bg-gray-400"
+              }`}
+            >
+              {seen.includes(ep.id) ? <MdVisibility /> : <MdVisibilityOff />}
+              {seen.includes(ep.id) ? "Visto" : "Não visto"}
+            </button>
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
   );
 }
