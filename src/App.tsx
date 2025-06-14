@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import EpisodeDetail from "./pages/EpisodeDetail";
 import Favorites from "./pages/Favorites";
+import Seen from "./pages/Seen";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/episode/:id" element={<EpisodeDetail />} />
           <Route path="/favorites" element={<Favorites />} />
+          <Route path="/seen" element={<Seen />} />
         </Routes>
       </main>
     </div>

@@ -23,21 +23,21 @@ const cardVariants = {
   show: { opacity: 1, y: 0 },
 };
 
-export default function Favorites() {
+export default function Seen() {
   const { favorites, seen, toggleFavorite, toggleSeen } = useEpisodes();
   const { data, loading, error } = useQuery<EpisodesResponse>(GET_EPISODES);
 
   if (loading) return <p>Carregando...</p>;
   if (error || !data) return <p>Erro ao carregar episódios.</p>;
 
-  const filtered = data.episodes.results.filter((ep) =>
-    favorites.includes(ep.id)
-  );
+  const filtered = data.episodes.results.filter((ep) => seen.includes(ep.id));
 
   return (
     <div className="space-y-4 mt-18">
-      <h1 className="text-2xl font-bold">Episódios Favoritos</h1>
-      {filtered.length === 0 && <p>Nenhum episódio favoritado ainda.</p>}
+      <h1 className="text-2xl font-bold">Episódios Vistos</h1>
+      {filtered.length === 0 && (
+        <p>Nenhum episódio marcado como visto ainda.</p>
+      )}
       <motion.div
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         variants={containerVariants}
